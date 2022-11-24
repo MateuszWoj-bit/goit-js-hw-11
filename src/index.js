@@ -3,21 +3,27 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
 import axios from 'axios';
+import { key } from './partials/pass';
 
 const gallery = document.querySelector('.gallery');
 const form = document.querySelector('.search-form');
 const input = document.querySelector('input');
+const loader = document.querySelector('.load-more');
+const switcher = document.querySelector('.switch');
 const imagesPerPage = 40;
 
+let infinityCheck = switcher.innerHTML === 'Image Loader: Infinite Scroll';
 let i = 1;
 let end = null;
 let inputQuery = null;
 
 form.addEventListener('submit', handleSubmit);
+loader.addEventListener('click', loadMoreImages);
+switcher.addEventListener('click', switchingMode);
 
 const fetchPictures = async (name, page = 1) => {
   const table = await axios.get(
-    `https://pixabay.com/api/?key=6755131-7999fe22e3bb9fa8947c67297&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=${imagesPerPage}`
+    `https://pixabay.com/api/?key=${key}&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=${imagesPerPage}`
   );
   return table;
 };
@@ -53,7 +59,7 @@ function handleSubmit(event) {
   event.preventDefault();
   inputQuery = input.value;
   i = 1;
-  end = false;
+  if (!infinityCheck) { end = false };
   gallery.innerHTML = '';
   fetchPictures(inputQuery)
     .then(function (response) {
@@ -103,6 +109,21 @@ function renderImages(response) {
   window.addEventListener('scroll', handleInfiniteScroll);
 }
 
+loader.classList.toggle('hidden');
+function switchingMode() {
+  if (switcher.innerHTML === 'Image Loader: Infinite Scroll') {
+    switcher.innerHTML = 'Image Loader: Button';
+    loader.classList.toggle('hidden');
+    end = true;
+  } else {
+    switcher.innerHTML = 'Image Loader: Infinite Scroll';
+    end = false;
+    loader.classList.toggle('hidden');
+    window.removeEventListener('scroll', handleInfiniteScroll);
+    window.addEventListener('scroll', handleInfiniteScroll);
+  }
+}
+
 //Infinite Scroll and Throttle
 var throttleTimer;
 const throttle = (callback, time) => {
@@ -123,9 +144,10 @@ const handleInfiniteScroll = () => {
 
     if (endOfPage) {
       loadMoreImages();
+      console.log('scroll');
     }
 
-    if (end) {      
+    if (end) {
       removeInfiniteScroll();
     }
   }, 1000);

@@ -9,7 +9,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #fafafa;
   color: #212121;
-  line-height: 1.5;
+  line-height: 1.5;  
 }
 .photo-card {
   margin-top: 8px;
@@ -31,8 +31,7 @@ body {
   align-content: space-around;
 }
 .submit {
-  position: absolute;
-  
+  position: absolute;  
   right: 0px;
   transform: translateY(16%);
 }
@@ -78,4 +77,55 @@ input {
   border-radius: 4px;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+
+.load-more, .switch{
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+   background-color: aqua;
+   padding: 5px;
+   border: none;
+   border-radius: 5px;
+  width: 90px;
+  transform: translateX(47vw);
+  
+}
+
+.load-more, .switch {
+    background: linear-gradient(to bottom, #cdcccc, #6a6a6a);
+    color: white;    
+    letter-spacing: -0.03rem;
+    text-shadow: 0 1px 0 rgb(0 0 0 / 0.3);   
+    box-shadow: 0 1rem 1rem rgb(0 0 0 / 0.1);
+    transition: 0.1s;
+    cursor: pointer;
+}
+
+.load-more:hover, .switch:hover {
+    translate: 0 1px;
+    border-bottom: 0.2rem solid #333;
+    box-shadow: 0 0.7rem 0.9rem rgb(0 0 0 / 0.13);
+}
+.load-more:active, .switch:active{
+    translate: 0 2px;
+    border-bottom: 0.1rem solid #333;
+    box-shadow: 0 0.3rem 0.8rem rgb(0 0 0 / 0.16);
+}
+
+.load-more:focus-visible, .switch:focus-visible {
+    outline: 5px solid blue;
+    outline-offset: -4px;
+}
+
+.switch {margin: 0;
+  margin-top: 2px;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(60%);
+width: 200px;}
+
+.hidden{
+  display: none;
 }
